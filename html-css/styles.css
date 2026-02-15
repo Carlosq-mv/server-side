@@ -1,0 +1,168 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.primary-color {
+    color: #8B7355;
+}
+
+.black-box {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 35px;
+    margin: 55px 35%;
+}
+
+.num {
+    text-decoration: underline;
+    font-size: 350%;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    position: relative;
+}
+
+/****** Text Styles ******/
+.text-overlay {
+    text-align: center;
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    width: 100%;
+    max-width: 650px;
+    z-index: 100;
+}
+
+h4.txt {
+    margin: 0;
+    letter-spacing: 6px;
+    color: red;
+}
+
+.txt {
+    letter-spacing: 6px;
+    color: white; 
+    font-size: small;
+    margin: 0;
+}
+
+.description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 30px 0 40px 0;
+}
+
+.email-section {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   gap: 10px;
+}
+
+.email-section .txt {
+    width: 100%;
+    text-align: center;
+    color: #8B7355;
+}
+
+.email-input {
+    width: 100%;
+    max-width: 350px;
+    height: 50px;
+    padding: 0 15px;
+    background-color: white;
+    border: none;
+    margin: 20px 0px;
+}
+
+input::placeholder {
+    font-size: 16px;
+    color: #999;
+}
+
+.contact-info {
+    padding-top: 40px;
+}
+
+.contact-info a {
+    color: white
+}
+
+.contact-info a:hover {
+    color: gray;
+}
+
+/****** Footer Styles ******/
+.footer-top {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1px;
+    background-color: white;
+}
+
+.footer-top > div {
+    background-color: black;
+    padding: 60px 40px; 
+}
+
+.footer-section {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.footer-bottom {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 10px;
+    background-color: black;
+    padding: 60px 40px;
+    color: white;
+    align-items: start;
+}
+
+.footer-bottom p {
+    line-height: 1.2; 
+}
+
+/****** Button Styles ******/
+.btn {
+    background-color: white;
+    border: 3px solid black;
+    padding: 15px 50px;
+    font-size: 14px;
+    letter-spacing: 6px;
+    text-decoration: none;
+    color: black;
+}
+
+.btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.btn-inverse {
+    background-color: black;
+    border: 3px solid white;
+    padding: 15px 50px;
+    font-size: 14px;
+    color: white;
+    letter-spacing: 6px;
+    text-decoration: none;
+}
+
+.btn-inverse:hover {
+    background-color: white;
+    color: black;
+}
