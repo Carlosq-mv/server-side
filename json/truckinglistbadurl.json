@@ -1,0 +1,30 @@
+{
+  "Mainline": {
+    "Table": {
+      "Header": {
+        "Data": [
+          "Parent Company",
+          "Subsidiary Portfolio / Services",
+          "HQ / Info",
+          "Annual Revenue ($ million)",
+          "HomePage",
+          "Logo"
+        ]
+      },
+      "Row": [
+        {
+          "Company": "TestCo",
+          "Services": "Freight",
+          "Hubs": {
+            "Hub": [
+              "Location"
+            ]
+          },
+          "Revenue": "$1,000",
+          "HomePage": "www.test.com",
+          "Logo": "test.png"
+        }
+      ]
+    }
+  }
+}

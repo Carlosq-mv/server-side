@@ -1,0 +1,29 @@
+{
+  "Mainline": {
+    "Table": {
+      "Header": {
+        "Data": [
+          "Parent Company",
+          "Subsidiary Portfolio / Services",
+          "HQ / Info",
+          "Annual Revenue ($ million)",
+          "HomePage",
+          "Logo"
+        ]
+      },
+      "Row": [
+        {
+          "Company": "NoLogo Inc",
+          "Services": "Transport",
+          "Hubs": {
+            "Hub": [
+              "Location"
+            ]
+          },
+          "Revenue": "$500",
+          "HomePage": "https://example.comLinks to an external site."
+        }
+      ]
+    }
+  }
+}
