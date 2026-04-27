@@ -74,9 +74,16 @@ echo ""
 echo "========================================="
 echo "11. DELETE company that doesn't exist (expect 404)"
 echo "========================================="
-curl -w "\nHTTP Status: %{http_code}\n" -X DELETE "$BASE_URL/companies/FakeCompany"
+curl -w "\n%{http_code}\n" -X DELETE "$BASE_URL/companies/QuickHaul"
 
 echo ""
+echo "========================================="
+echo "12. POST with no Company field (expect 400)"
+echo "========================================="
+curl -w "\n%{http_code}\n" -X POST "$BASE_URL/companies" \
+     -H "Content-Type: application/json" \
+     -d '{"Services": "LTL, Freight", "Hubs": {"Hub": ["Dallas", "Chicago"]}, "Revenue": "$12,000", "HomePage": "https://quickhaul.com", "Logo": "quickhaul.png"}'
+    
 echo "========================================="
 echo "All tests complete."
 echo "========================================="

@@ -103,6 +103,9 @@ def add_company():
     if not new_company:
         abort(400, description="Request body must be valid JSON")
 
+    if not new_company.get("Company"):
+        abort(400, description="Invalid or missing fields")
+
     data = crud.read_json()
     rows = crud.get_rows(data)
 
@@ -123,7 +126,7 @@ def update_company(name):
     # Save the updated data back to the file
     updated_company = request.get_json(silent=True)
     if not updated_company:
-        abort(400, description="Invalid or missing fields")
+        abort(400, description="Request body must be valid JSON")
 
     data = crud.read_json()
     rows = crud.get_rows(data)

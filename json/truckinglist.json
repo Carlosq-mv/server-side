@@ -12,7 +12,6 @@
         ]
       },
       "Row": [
-          
         {
           "Company": "UPS",
           "Services": "UPS Ground, UPS Freight",
@@ -26,7 +25,7 @@
           "HomePage": "https://www.ups.com/",
           "Logo": "ups.jpg"
         },
-          
+
         {
           "Company": "FedEx",
           "Services": "FedEx Ground, FedEx Freight, FedEx Custom Critical",
@@ -39,9 +38,8 @@
           "Revenue": "$14,149",
           "HomePage": "https://www.fedex.com",
           "Logo": "fedex.jpg"
-        },  
-          
-          
+        },
+
         {
           "Company": "J.B. Hunt Transport Services",
           "Services": "Truckload, Dedicated Contract Services, Integrated Capacity Solutions, Intermodal",
@@ -54,9 +52,8 @@
           "Revenue": "$4,527",
           "HomePage": "https://www.jbhunt.com/",
           "Logo": "jbhunt.png"
-        },  
-          
-          
+        },
+
         {
           "Company": "YRC Worldwide",
           "Services": "YRC Freight, YRC Regional",
@@ -69,8 +66,8 @@
           "Revenue": "$4,869",
           "HomePage": "https://www.yrcw.com/",
           "Logo": "yrcw.png"
-        }, 
-          
+        },
+
         {
           "Company": "Con-way",
           "Services": "Con-way Freight, Con-way Truckload",
@@ -83,8 +80,8 @@
           "Revenue": "$3,729",
           "HomePage": "http://www.con-way.com",
           "Logo": "con-way.png"
-        },  
-          
+        },
+
         {
           "Company": "Swift Transportation",
           "Services": "Truckload, Dedicated, Intermodal",
@@ -97,9 +94,9 @@
           "Revenue": "$3,334",
           "HomePage": "http://www.swifttrans.com/",
           "Logo": "swift.png"
-        }        
-        
+        }
       ]
     }
   }
 }
+
