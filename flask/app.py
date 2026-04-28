@@ -6,13 +6,14 @@ from flask import Flask, abort, jsonify, request
 app = Flask(__name__)
 
 JSON_DIR = "/var/www/html/hw-json"
+REQUIRED_FIELDS = {"Company", "Services", "Hubs", "Revenue", "HomePage", "Logo"}
 
 
 class TruckCRUD:
     def __init__(self, filepath):
         self.filepath = filepath
 
-    def read_json(self):
+    def read_file(self):
         try:
             with open(self.filepath, "r") as f:
                 return json.load(f)
@@ -21,7 +22,7 @@ class TruckCRUD:
         except json.JSONDecodeError:
             abort(500, description="Corrupted JSON data")
 
-    def write_json(self, data):
+    def write_to_file(self, data):
         try:
             with open(self.filepath, "w") as f:
                 json.dump(data, f, indent=2)
@@ -68,7 +69,7 @@ def index():
 def get_all_companies():
     # Load JSON file from disk
     # Get data from JSON file
-    data = crud.read_json()
+    data = crud.read_file()
     rows = crud.get_rows(data)
 
     companies = []
@@ -83,7 +84,7 @@ def get_all_companies():
 def get_company(name):
     # Load JSON and return data for the company if it exists
     # If not found, return 404 error
-    data = crud.read_json()
+    data = crud.read_file()
     rows = crud.get_rows(data)
     for row in rows:
         if row.get("Company") == name:
@@ -103,17 +104,37 @@ def add_company():
     if not new_company:
         abort(400, description="Request body must be valid JSON")
 
-    if not new_company.get("Company"):
+    # make sure payload is dictionary so it won't crash on .keys()
+    if not isinstance(new_company, dict):
+        abort(400, description="Request body must be a JSON object")
+
+    # make sure no extra fields are added
+    extra_fields = new_company.keys() - REQUIRED_FIELDS
+    if extra_fields:
+        abort(400, description="Extra fields present")
+
+    # make sure all required fields are present
+    missing_fields = REQUIRED_FIELDS - new_company.keys()
+    if missing_fields:
         abort(400, description="Invalid or missing fields")
 
-    data = crud.read_json()
+    # make sure none of the fields are empty:
+    for field in new_company.keys():
+        if new_company[field] in [[], {}, None, ""]:
+            abort(400, description="One or more empty fields")
+
+    # make sure that "Hubs" is a dictionary
+    if not isinstance(new_company.get("Hubs"), dict):
+        abort(400, description="Invalid JSON structure")
+
+    data = crud.read_file()
     rows = crud.get_rows(data)
 
     if crud.is_duplicate(rows, new_company.get("Company")):
         abort(400, description="Company already exists")
 
     rows.append(new_company)
-    crud.write_json(data)
+    crud.write_to_file(data)
 
     return jsonify(new_company), 201
 
@@ -128,13 +149,25 @@ def update_company(name):
     if not updated_company:
         abort(400, description="Request body must be valid JSON")
 
-    data = crud.read_json()
+    if not isinstance(updated_company, dict):
+        abort(400, description="Request body must be a JSON object")
+
+    # make sure that provided fields can't be empty
+    for key in updated_company:
+        if updated_company[key] in (None, "", [], {}):
+            abort(400, description="Empty fields present")
+
+    # make sure that if "Hubs" is provided, it must be a dict
+    if "Hubs" in updated_company and not isinstance(updated_company["Hubs"], dict):
+        abort(400, description="'Hubs' must be a JSON object")
+
+    data = crud.read_file()
     rows = crud.get_rows(data)
 
     for row in rows:
         if row.get("Company", "N/A") == name:
             row.update(updated_company)
-            crud.write_json(data)
+            crud.write_to_file(data)
 
             return jsonify(row), 200
 
@@ -146,13 +179,13 @@ def update_company(name):
 def delete_company(name):
     # Locate and delete the specified company
     # Save the updated data back to the file
-    data = crud.read_json()
+    data = crud.read_file()
     rows = crud.get_rows(data)
 
     for company in rows:
         if company.get("Company") == name:
             rows.remove(company)
-            crud.write_json(data)
+            crud.write_to_file(data)
             return jsonify({"message": f"{name} deleted"}), 200
 
     abort(404, description="Company not found")
