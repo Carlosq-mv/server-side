@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stonk Search</title>
+    <link href="/static/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="search-container">
+      <!-- Search Form -->
+      <form id="search-form">
+        <h2 style="margin: 0">Search Stock</h2>
+        <div class="input-row">
+          <label for="ticker-input">Enter a Stock Ticker Symbol*</label>
+          <input id="ticker-input" type="text" name="ticker" required />
+        </div>
+        <div class="button-row">
+          <button class="btn" type="submit">Search</button>
+          <button class="btn" type="button" id="clear-btn">Clear</button>
+        </div>
+
+        <!-- Error message (hidden by default) -->
+        <div
+          style="color: red; font-weight: bold"
+          id="error-message"
+          hidden
+        ></div>
+      </form>
+    </div>
+    <hr />
+
+    <!-- Tab buttons -->
+    <div id="results-container" hidden>
+      <nav id="tabs">
+        <button type="button" data-tab="outlook">Company Outlook</button>
+        <button type="button" data-tab="summary">Stock Summary</button>
+        <button type="button" data-tab="history">Search History</button>
+      </nav>
+
+      <!-- Tab: Company Outlook -->
+      <section id="tab-outlook" class="tab-panel" hidden>
+        <table>
+          <tbody>
+            <tr>
+              <th>Company Name</th>
+              <td id="company-name"></td>
+            </tr>
+            <tr>
+              <th>Stock Ticker Symbol</th>
+              <td id="ticker-symbol"></td>
+            </tr>
+            <tr>
+              <th>Exchange Code</th>
+              <td id="exchange-code"></td>
+            </tr>
+            <tr>
+              <th>Start Date</th>
+              <td id="start-date"></td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td><div id="description"></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Tab: Stock Summary -->
+      <section id="tab-summary" class="tab-panel" hidden>
+        <table>
+          <tbody>
+            <tr>
+              <th>Stock Ticker Symbol</th>
+              <td id="summary-ticker"></td>
+            </tr>
+            <tr>
+              <th>Trading Day</th>
+              <td id="summary-date"></td>
+            </tr>
+            <tr>
+              <th>Previous Closing Price</th>
+              <td id="summary-prev-close"></td>
+            </tr>
+            <tr>
+              <th>Opening Price</th>
+              <td id="summary-open"></td>
+            </tr>
+            <tr>
+              <th>High Price</th>
+              <td id="summary-high"></td>
+            </tr>
+            <tr>
+              <th>Low Price</th>
+              <td id="summary-low"></td>
+            </tr>
+            <tr>
+              <th>Last Price</th>
+              <td id="summary-last"></td>
+            </tr>
+            <tr>
+              <th>Change</th>
+              <td id="summary-change"></td>
+            </tr>
+            <tr>
+              <th>Change Percent</th>
+              <td id="summary-change-percent"></td>
+            </tr>
+            <tr>
+              <th>Number of Shares Traded</th>
+              <td id="summary-volume"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Tab: Search History -->
+      <section id="tab-history" class="tab-panel" hidden>
+        <table>
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="history-body">
+            <!-- rows populated by JS -->
+          </tbody>
+        </table>
+      </section>
+    </div>
+    <script src="/static/script.js"></script>
+  </body>
+</html>
