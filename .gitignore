@@ -1,7 +1,8 @@
 .DS_Store
 venv/
 README.md
-
+*.db
+*.env
 __pycache__/
 .vscode/
 .mypy_cache/
