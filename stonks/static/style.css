@@ -66,6 +66,12 @@ td {
   background-color: white;
 }
 
+td img {
+  height: 20px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
 td {
   text-align: center;
 }

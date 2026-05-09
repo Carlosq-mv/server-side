@@ -45,11 +45,12 @@ function handleSearch() {
       return;
     }
 
-    let data;
+    let data, cache;
     try {
-      data = await searchTicker(ticker);
+      ({ data, cache } = await searchTicker(ticker));
     } catch (e) {
       setErrorMessage(e.message || "Unexpected error occured");
+      document.getElementById("cache-message").innerText = "";
       return;
     }
 
@@ -63,6 +64,9 @@ function handleSearch() {
     document.getElementById("tab-summary").hidden = true;
     document.getElementById("tab-history").hidden = true;
 
+    // set the cache message if cache HIT
+    setCacheMessage(cache);
+
     // set the Company Outlook tab button to active
     showTab("outlook");
 
@@ -75,11 +79,13 @@ function handleSearch() {
 async function searchTicker(ticker) {
   const response = await fetch(`/stock/${encodeURIComponent(ticker)}`);
   const body = await response.json();
-
   if (!response.ok) {
     throw new Error(body.error);
   }
-  return body;
+  return {
+    data: body,
+    cache: response.headers.get("X-Cache"),
+  };
 }
 
 async function getSearchHistory() {
@@ -111,6 +117,18 @@ function setErrorMessage(errorMessage) {
   if (!resultsContainer.hidden) {
     resultsContainer.hidden = true;
   }
+  // hide any cache messages if present
+  setCacheMessage("");
+}
+
+function setCacheMessage(cache) {
+  const cacheDiv = document.getElementById("cache-message");
+
+  if (cache && cache === "HIT") {
+    cacheDiv.innerText = "Data served from cache";
+  } else {
+    cacheDiv.innerText = "";
+  }
 }
 
 function populateCompanyTab(data) {
@@ -122,6 +140,12 @@ function populateCompanyTab(data) {
 }
 
 function populateSummaryTab(data) {
+  const downArrowSrc = "/static/images/RedArrowDown.png";
+  const upArrowSrc = "/static/images/GreenArrowUP.png";
+
+  const changeImg = document.getElementById("summary-change-img");
+  const percentImg = document.getElementById("summary-change-percent-img");
+
   document.getElementById("summary-ticker").textContent = data.ticker;
   document.getElementById("summary-date").textContent = data.date;
   document.getElementById("summary-prev-close").textContent =
@@ -131,9 +155,34 @@ function populateSummaryTab(data) {
   document.getElementById("summary-low").textContent = data.low;
   document.getElementById("summary-last").textContent =
     data.last_price ?? "N/A";
-  document.getElementById("summary-change").textContent = data.change ?? "N/A";
+
+  document.getElementById("summary-change").innerHTML = data.change ?? "N/A";
+
+  if (data.change < 0) {
+    changeImg.src = downArrowSrc;
+    changeImg.alt = "down arrow";
+  } else if (data.change > 0) {
+    changeImg.src = upArrowSrc;
+    changeImg.alt = "up arrow";
+  } else {
+    changeImg.src = "";
+    changeImg.alt = "";
+  }
+
   document.getElementById("summary-change-percent").textContent =
     data.change_percent ?? "N/A";
+
+  if (data.change_percent < 0) {
+    percentImg.src = downArrowSrc;
+    percentImg.alt = "down arrow";
+  } else if (data.change_percent > 0) {
+    percentImg.src = upArrowSrc;
+    percentImg.alt = "up arrow";
+  } else {
+    percentImg.src = "";
+    percentImg.alt = "";
+  }
+
   document.getElementById("summary-volume").textContent = data.volume;
 }
 
