@@ -26,6 +26,11 @@
           id="error-message"
           hidden
         ></div>
+        <!-- Cache Message -->
+        <div
+          style="color: #166534; font-size: 0.75rem; font-style: italic"
+          id="cache-message"
+        ></div>
       </form>
     </div>
     <hr />
@@ -100,11 +105,17 @@
             </tr>
             <tr>
               <th>Change</th>
-              <td id="summary-change"></td>
+              <td>
+                <span id="summary-change"></span>
+                <img id="summary-change-img" src="" alt="" />
+              </td>
             </tr>
             <tr>
               <th>Change Percent</th>
-              <td id="summary-change-percent"></td>
+              <td>
+                <span id="summary-change-percent"></span>
+                <img id="summary-change-percent-img" src="" alt="" />
+              </td>
             </tr>
             <tr>
               <th>Number of Shares Traded</th>
