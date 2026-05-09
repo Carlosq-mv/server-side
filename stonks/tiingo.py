@@ -14,7 +14,7 @@ class TiingoError(Exception):
         self.status = status
 
 
-def fetch_stock(ticker: str) -> tuple[dict, dict]:
+def fetch_stock(ticker):
     try:
         # get company data
         company_res = requests.get(
@@ -32,7 +32,7 @@ def fetch_stock(ticker: str) -> tuple[dict, dict]:
         status = e.response.status_code
         if status == 404:
             raise TiingoError(
-                "No record found, please enter a valid ticker symbol", 404
+                "No record has been found, please enter a valid symbol", 404
             )
         elif status == 401:
             raise TiingoError("API authentication failed", 401)
@@ -45,7 +45,7 @@ def fetch_stock(ticker: str) -> tuple[dict, dict]:
         raise TiingoError("Error encountered", 500)
 
     summary_payload = summary_res.json()
-    if not summary_payload:
-        raise TiingoError("No record found, please enter a valid ticker symbol", 404)
+    if not summary_payload or summary_payload[0] is None:
+        raise TiingoError("No record has been found, please enter a valid symbol", 404)
 
     return company_res.json(), summary_payload[0]

@@ -13,13 +13,13 @@ class CacheStatus(Enum):
     STALE = "STALE"
 
 
-def get_conn() -> sqlite3.Connection:
+def get_conn():
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
     return conn
 
 
-def init_db() -> None:
+def init_db():
     with get_conn() as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS SearchHistory (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,7 +35,7 @@ def init_db() -> None:
         ) """)
 
 
-def get_cache_results(ticker: str) -> tuple[CacheStatus, sqlite3.Row | None]:
+def get_cache_results(ticker):
     with get_conn() as conn:
         row = conn.execute(
             "SELECT * FROM CachedStockData WHERE ticker = ?", (ticker.upper(),)
@@ -54,7 +54,7 @@ def get_cache_results(ticker: str) -> tuple[CacheStatus, sqlite3.Row | None]:
         return CacheStatus.STALE, None
 
 
-def update_cache(ticker: str, company_json: str, stock_json: str):
+def update_cache(ticker, company_json, stock_json):
     with get_conn() as conn:
         conn.execute(
             """
@@ -71,7 +71,7 @@ def update_cache(ticker: str, company_json: str, stock_json: str):
         )
 
 
-def insert_cache(ticker: str, company_json: str, stock_json: str):
+def insert_cache(ticker, company_json, stock_json):
     with get_conn() as conn:
         conn.execute(
             """
@@ -87,19 +87,19 @@ def insert_cache(ticker: str, company_json: str, stock_json: str):
         )
 
 
-def add_search(ticker: str) -> None:
+def add_search(ticker):
     with get_conn() as conn:
         conn.execute("INSERT INTO SearchHistory (ticker) VALUES (?)", (ticker.upper(),))
 
 
-def get_recent_searches(limit: int = 10) -> list[dict]:
+def get_recent_searches(limit=10):
     with get_conn() as conn:
         rows = conn.execute(
             "SELECT ticker, timestamp FROM SearchHistory ORDER BY id DESC LIMIT ?",
             (limit,),
         ).fetchall()
 
-        list_rows: list[dict] = []
+        list_rows = []
         for row in rows:
             list_rows.append(dict(row))
 

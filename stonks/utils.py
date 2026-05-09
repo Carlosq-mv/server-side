@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-def company(data: dict) -> dict:
+def company(data):
     return {
         "name": data.get("name"),
         "ticker": data.get("ticker"),
@@ -11,7 +11,7 @@ def company(data: dict) -> dict:
     }
 
 
-def summary(data: dict) -> dict:
+def summary(data):
     prev_close = data.get("prevClose")
     last = data.get("last") or data.get("tngoLast")
 
@@ -24,7 +24,7 @@ def summary(data: dict) -> dict:
 
     return {
         "ticker": data.get("ticker"),
-        "date": data.get("timestamp", "")[:10],
+        "date": (data.get("timestamp", "") or "")[:10],
         "prev_close": prev_close,
         "open": data.get("open"),
         "high": data.get("high"),

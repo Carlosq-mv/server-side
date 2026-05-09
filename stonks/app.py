@@ -59,8 +59,8 @@ def stock(ticker):
 
 @app.route("/history", methods=["GET"])
 def get_history():
-    # NOTE: handle empty list in frontend
     return jsonify(database.get_recent_searches(10)), 200
 
 
-app.run(debug=True, port=8080)
+if __name__ == "__main__":
+    app.run(debug=True, port=8080)
